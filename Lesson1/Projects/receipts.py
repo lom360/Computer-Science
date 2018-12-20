@@ -75,4 +75,4 @@ print("Customer Two Total: ")
 print(customer_two_total)
 
 # Note that there are of course better ways to implement this receipt system.
-# However we are only applying the lessons we have ONLY gone through.
+# However we are ONLY applying the lessons we have learned from Python Syntax.
