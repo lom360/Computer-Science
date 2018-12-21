@@ -38,9 +38,11 @@ def get_work(mass, acceleration, distance):
 
 # Converting 100 degrees fahrenheit to celsius
 f100_in_celsius = f_to_c(100)
+print("100 degress fahrenheit is " + str(f100_in_celsius) + " degrees celsius")
 
 # Converting 0 degrees celsius to fahrenheit
 c0_in_fahrenheit = c_to_f(0)
+print("0 degress celsius is " + str(c0_in_fahrenheit) + " degrees fahrenheit")
 
 # Calculating force outputted by train
 train_force = get_force(train_mass, train_acceleration)
