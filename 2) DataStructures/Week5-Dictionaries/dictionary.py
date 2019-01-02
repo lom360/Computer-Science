@@ -1,10 +1,11 @@
 fname = input("Enter File Name: ")
+# The if statement is there just in case user inputs incorrect file name.
 if fname != "mbox-short.txt": fname = "mbox-short.txt"
 fhandle = open(fname)
 
 email = dict()
 address = ""
-max = 0
+count = 0
 
 for line in fhandle :
     line = line.rstrip()
@@ -14,8 +15,8 @@ for line in fhandle :
         words = line.split()
         email[words[1]] = email.get(words[1], 0) + 1
         for mail in email :
-            if max < email[mail] :
+            if count < email[mail] :
                 address = mail
-                max = email[mail]
+                count = email[mail]
 
-print(address, max)
+print(address, count)
