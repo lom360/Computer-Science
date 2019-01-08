@@ -4,20 +4,24 @@ import urllib.error
 from xml.etree import ElementTree as ET
 import ssl
 
-def parse_website(new_url) :
+
+def parse_website(new_url):
     print('Retrieving url', new_url)
     uh = urllib.request.urlopen(new_url, context=ctx)
     return uh.read()
 
-def create_tree(new_data) :
+
+def create_tree(new_data):
     print('Retrieved', len(new_data), 'characters')
     print(new_data.decode())
     return ET.fromstring(new_data)
 
-def find_total(comments) :
-    results = comments.findall('comments')
-    print(results[0].text)
-    return 1
+
+# def find_total(comments):
+#     results = comments.findall('commentinfo').findall(comments)
+#     print(results)
+#     return 1
+
 
 # Ignore SSL certificate errors
 ctx = ssl.create_default_context()
@@ -32,9 +36,9 @@ while True:
         break
     data = parse_website(url)
     tree = create_tree(data)
-    total = find_total(tree)
-    print(total)
-    
+    results = tree.find('comments').find('comment').find('count').text
+    temp = results
+    print(results)
 
 
 # while True:
