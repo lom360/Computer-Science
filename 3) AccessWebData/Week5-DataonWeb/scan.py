@@ -4,33 +4,37 @@ import urllib.error
 from xml.etree import ElementTree as ET
 import ssl
 
-def parse_website() :
-    print("Hello World")
+def parse_website(new_url) :
+    print('Retrieving url', new_url)
+    uh = urllib.request.urlopen(new_url, context=ctx)
+    return uh.read()
 
-api_key = False
-# If you have a Google Places API key, enter it here
-# api_key = 'AIzaSy___IDByT70'
-# https://developers.google.com/maps/documentation/geocoding/intro
+def create_tree(new_data) :
+    print('Retrieved', len(new_data), 'characters')
+    print(new_data.decode())
+    return ET.fromstring(new_data)
 
-if api_key is False:
-    api_key = 42
-    serviceurl = 'http://py4e-data.dr-chuck.net/xml?'
-else:
-    serviceurl = 'https://maps.googleapis.com/maps/api/geocode/xml?'
+def find_total(comments) :
+    results = comments.findall('comments')
+    print(results[0].text)
+    return 1
 
 # Ignore SSL certificate errors
 ctx = ssl.create_default_context()
 ctx.check_hostname = False
 ctx.verify_mode = ssl.CERT_NONE
 
-comments = dict()
+total = 0
 
 while True:
     url = input('Enter url: ')
     if len(url) < 1:
         break
+    data = parse_website(url)
+    tree = create_tree(data)
+    total = find_total(tree)
+    print(total)
     
-
 
 
 # while True:
