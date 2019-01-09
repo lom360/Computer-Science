@@ -4,24 +4,25 @@ import urllib.error
 from xml.etree import ElementTree as ET
 import ssl
 
-
 def parse_website(new_url):
     print('Retrieving url', new_url)
     uh = urllib.request.urlopen(new_url, context=ctx)
     return uh.read()
 
-
-def create_tree(new_data):
+def create_tree(new_data) :
     print('Retrieved', len(new_data), 'characters')
     print(new_data.decode())
     return ET.fromstring(new_data)
 
-
-# def find_total(comments):
-#     results = comments.findall('commentinfo').findall(comments)
-#     print(results)
-#     return 1
-
+def find_total(tmp_tree) :
+    count = 0
+    new_sum = 0
+    results = tmp_tree.findall('.//count')
+    for result in results :
+        new_sum = new_sum + int(result.text)
+        count += 1
+    print("Count:", count)
+    return new_sum
 
 # Ignore SSL certificate errors
 ctx = ssl.create_default_context()
@@ -36,33 +37,5 @@ while True:
         break
     data = parse_website(url)
     tree = create_tree(data)
-    results = tree.find('comments').find('comment').find('count').text
-    temp = results
-    print(results)
-
-
-# while True:
-#     address = input('Enter location: ')
-#     if len(address) < 1:
-#         break
-
-#     parms = dict()
-#     parms['address'] = address
-#     if api_key is not False:
-#         parms['key'] = api_key
-#     url = serviceurl + urllib.parse.urlencode(parms)
-#     print('Retrieving', url)
-#     uh = urllib.request.urlopen(url, context=ctx)
-
-#     data = uh.read()
-#     print('Retrieved', len(data), 'characters')
-#     print(data.decode())
-#     tree = ET.fromstring(data)
-
-#     results = tree.findall('result')
-#     lat = results[0].find('geometry').find('location').find('lat').text
-#     lng = results[0].find('geometry').find('location').find('lng').text
-#     location = results[0].find('formatted_address').text
-
-#     print('lat', lat, 'lng', lng)
-#     print(location)
+    total = find_total(tree)
+    print("Sum", total)
